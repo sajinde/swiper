@@ -6,7 +6,7 @@ from django.http import HttpResponse
 from django.utils.deprecation import MiddlewareMixin
 
 from common import errors
-from common.http import render_json
+from lib.http import render_json
 from user.models import User
 
 err_log = getLogger('err')

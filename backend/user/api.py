@@ -1,8 +1,8 @@
 from django.shortcuts import render
 
 from lib.cache import rds
+from lib.http import require_post
 from common import errors
-from common.http import require_post
 from user.models import User
 from user.forms import ProfileForm
 from user.logic import send_login_code

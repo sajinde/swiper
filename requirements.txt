@@ -6,6 +6,6 @@ ipython==6.5.0
 Pillow==5.2.0
 qiniu==7.2.2
 redis==2.10.6
-requests==2.19.1
+requests==2.20.0
 tornado==5.1.1
 tornado-redis==2.4.18

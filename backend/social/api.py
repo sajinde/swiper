@@ -1,4 +1,4 @@
-from common.http import require_post
+from lib.http import require_post
 from vip.logic import need_perm
 from social import logic
 from social.models import Friends

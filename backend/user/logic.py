@@ -1,10 +1,10 @@
 from lib.cache import rds
-from common import sms
+from lib import sms
+from lib.qiniu import qiniu_upload_data
 from common import keys
 from common import errors
 from swiper import platform_config
 from worker import call_by_worker
-from lib.qiniu import qiniu_upload_data
 
 def send_login_code(phone_num):
     '''发送登陆验证短信'''

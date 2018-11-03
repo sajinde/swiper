@@ -12,7 +12,6 @@ from lib.cache import rds
 from user.models import User
 
 # 从 Chat 本身引入
-# from common import cache_keys as ckeys
 import log
 import logic
 
@@ -91,7 +90,7 @@ class ChatHandler(WebSocketHandler):
 
             # 保存 connections
             self.uid = uid
-            self.user = User(uid=session['uid'])
+            self.user = User.get(uid=session['uid'])
             self.sessionid = sessionid
             self.login_time = int(time.time())
             self.rds = self.connect_redis()  # 异步redis连接 (用于监听用户相关消息)
