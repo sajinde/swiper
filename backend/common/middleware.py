@@ -1,6 +1,5 @@
 from logging import getLogger
-from sys import exc_info
-from traceback import format_exception
+from traceback import format_exc
 
 from django.http import HttpResponse
 from django.utils.deprecation import MiddlewareMixin
@@ -12,35 +11,25 @@ from user.models import User
 err_log = getLogger('err')
 
 
-class JsonMiddleware(MiddlewareMixin):
-    '''将结果渲染成 json 数据'''
-    def process_response(self, request, response):
-        '''对结果进行封装'''
-        if isinstance(response, HttpResponse):
-            return response
-        elif isinstance(response, dict):
-            return render_json(response)
-        else:
-            err_log.error('Unknow type of the result: %s' % response)
-            return response
-
+class LogicErrorMiddleware(MiddlewareMixin):
+    '''通用逻辑异常处理中间件'''
     def process_exception(self, request, exception):
-        '''异常处理'''
         if isinstance(exception, errors.LogicError):
-            return render_json(error=exception)
+            response = render_json(error=exception)
         else:
-            # TODO: 向开发者发送异常告警邮件
-            error_info = format_exception(*exc_info())
-            err_log.error(''.join(error_info))  # 输出错误日志
-            return render_json(error=errors.InternalError)
+            error_info = '\n%s' % format_exc()
+            err_log.error(error_info)  # 输出错误日志
+            response = render_json(error=errors.InternalError)
+
+        return response
 
 
 class AuthMiddleware(MiddlewareMixin):
     '''登陆认证检查中间件'''
     # 不需要检查的路径
     IGNORED_PATH_LIST = [
-        '/user/verify/phone',
-        '/user/verify/code',
+        '/api/user/verify',
+        '/api/user/login',
     ]
 
     def is_ignored_path(self, path):

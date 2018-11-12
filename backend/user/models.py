@@ -18,13 +18,17 @@ class User(models.Model):
 
     # user info
     sex = models.CharField(max_length=16, choices=SEX, blank=False, null=False)
-    birth_year = models.IntegerField(default=1990)
+    birth_year = models.IntegerField(default=2000)
     birth_month = models.IntegerField(default=1)
     birth_day = models.IntegerField(default=1)
     location = models.CharField(max_length=32, verbose_name='常居地')
 
-    vip_id = models.IntegerField()  # 关联的 vip id
+    vip_id = models.IntegerField(default=1)  # 关联的 vip id
     vip_expiration = models.DateTimeField(auto_now_add=True, verbose_name="会员过期时间")
+
+    def init(self):
+        '''TODO: 创建新用户的初始化操作'''
+        pass
 
     @cached_property
     def age(self):

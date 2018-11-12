@@ -6,15 +6,20 @@
 '''
 
 
-class LogicError(BaseException):
+class LogicError(Exception):
     '''程序内部逻辑错误'''
     code = None
+    data = None
 
     def __init__(self, data=None):
         self.data = data  # 发生异常时需要传回前端的数据
 
     def __str__(self):
         return self.__class__.__name__
+
+    @property
+    def msg(self):
+        return self.data or self.__class__.__name__
 
 
 def gen_error(name: str, err_code: int) -> LogicError:
@@ -27,7 +32,7 @@ def gen_error(name: str, err_code: int) -> LogicError:
 OK = gen_error('OK', 0)
 
 # 通用错误
-InternalError = gen_error('InternalError', 1000)        # 服务器内部错误
+InternalError = gen_error('InternalError', 500)         # 服务器内部错误
 ParamsError = gen_error('ParamsError', 1001)            # 参数错误
 DataError = gen_error('DataError', 1002)                # 数据错误
 DoseNotExist = gen_error('DoseNotExist', 1003)          # 不存在
@@ -36,7 +41,8 @@ PermissionDenied = gen_error('PermissionDenied', 1005)  # 没有权限
 Timeout = gen_error('Timeout', 1006)                    # 超时
 Expired = gen_error('Expired', 1007)                    # 已过期
 NotYetTime = gen_error('NotYetTime', 1008)              # 时间未到
-InvalidPIN = gen_error('InvalidPIN', 1009)              # 无效验证码
+InvalidPhone = gen_error('InvalidPhone', 1009)          # 无效手机号
+InvalidPIN = gen_error('InvalidPIN', 1010)              # 无效验证码
 
 # 用户类错误
 LoginRequired = gen_error('LoginRequired', 2000)    # 用户未登录

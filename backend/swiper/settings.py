@@ -25,7 +25,17 @@ SECRET_KEY = 'k$gybxt1($!)w=0=(7+@-f(wz&9t*z7joo41jike@3me6wm!nx'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = [
+    '127.0.0.1',
+    '127.0.0.1:8000',
+    '127.0.0.1:9000',
+]
+# CORS_ORIGIN_ALLOW_ALL = True
+CORS_ORIGIN_WHITELIST = [
+    '127.0.0.1',
+    '127.0.0.1:8000',
+    '127.0.0.1:9000',
+]
 
 
 # Application definition
@@ -36,6 +46,7 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.staticfiles',
+    'corsheaders',
     'user',
     'social',
     'vip',
@@ -44,11 +55,10 @@ INSTALLED_APPS = [
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-
-    'common.middleware.JsonMiddleware',
+    'common.middleware.LogicErrorMiddleware',
     'common.middleware.AuthMiddleware',
 ]
 
@@ -156,7 +166,7 @@ LOGGING = {
     'handlers': {
         'console': {
             'class': 'logging.StreamHandler',
-            'level': 'DEBUG' if DEBUG else 'WARNING'
+            'level': 'DEBUG'
         },
         'info': {
             'class': 'logging.handlers.TimedRotatingFileHandler',
@@ -164,7 +174,7 @@ LOGGING = {
             'when': 'D',  # 每天切割日志
             'backupCount': 30,  # 日志保留 30 天
             'formatter': 'simple',
-            'level': 'INFO',
+            'level': 'DEBUG'
         },
         'error': {
             'class': 'logging.handlers.TimedRotatingFileHandler',
@@ -172,21 +182,24 @@ LOGGING = {
             'when': 'W0',  # 每周一切割日志
             'backupCount': 4,  # 日志保留 4 周
             'formatter': 'verbose',
-            'level': 'WARNING',
+            'level': 'DEBUG'
         }
     },
 
     'loggers': {
         'django': {
             'handlers': ['console'],
+            # 'level': 'DEBUG' if DEBUG else 'INFO',
         },
         'inf': {
             'handlers': ['info'],
             'propagate': True,
+            'level': 'DEBUG' if DEBUG else 'INFO',
         },
         'err': {
             'handlers': ['error'],
             'propagate': True,
+            'level': 'DEBUG' if DEBUG else 'ERROR',
         }
     }
 }
