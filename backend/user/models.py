@@ -92,6 +92,7 @@ class Avatar(models.Model):
         '''选择第一张图片作为头像'''
         return self.first
 
+
 class Profile(models.Model):
     SEX = (
         ('Male', '男性'),

@@ -5,13 +5,13 @@
 
 1. 所有获取数据的 HTTP 接口, 参数均由 GET 方法传递
 2. 所有修改数据的 HTTP 接口, 参数均由 POST 方法传递
-3. 返回值均为 JSON 格式, 必须包含两个字段: "sc", "data"
-    1. sc 字段为状态码(status code), int 类型, 为 0 时表示返回值正常, 其他任何值时均表示异常, 需客户端根据状态码为用户提供不同的错误提示
+3. 返回值均为 JSON 格式, 必须包含两个字段: "code", "data"
+    1. code 字段为状态码(status code), int 类型, 为 0 时表示返回值正常, 其他任何值时均表示异常, 需客户端根据状态码为用户提供不同的错误提示
     2. data 字段为返回的数据, 字典类型. 详情见下面具体接口. 当一个接口仅需状态码确认时, data 可以为空
     3. 示例
        ```json
        {
-           "sc": 0,
+           "code": 0,
            "data": {
                "user": {
                    "uid": 123321,
@@ -83,7 +83,7 @@ code | description
 
         ```json
         {
-            "sc": 0,
+            "code": 0,
             "data": null
         }
         ```
@@ -107,7 +107,7 @@ code | description
         示例:
         ```json
         {
-            "sc": 0,
+            "code": 0,
             "data": {
                 "user": {
                     "uid": 123,                   // 用户 id
@@ -206,7 +206,7 @@ code | description
 
         ```json
         {
-            "sc": 0,
+            "code": 0,
             "data": {
                 "users": [
                     {"uid": 123, "nickname": "Da", "age": 21, ...},
@@ -293,7 +293,7 @@ code | description
         示例:
         ```json
         {
-            "sc": 0,
+            "code": 0,
             "data": {
                 "users": [
                     {"uid": 123, "nickname": "Da", "age": 21, ...},
@@ -319,7 +319,7 @@ code | description
         示例:
         ```json
         {
-            "sc": 0,
+            "code": 0,
             "data": {
                 "friends": [
                     {"uid": 123, "nickname": "Da", "age": 21, ...},

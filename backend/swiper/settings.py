@@ -155,7 +155,6 @@ ADMINS = [
 EMAIL_SUBJECT_PREFIX = '[Swiper] '
 
 
-
 # Logging
 LOGGING = {
     'version': 1,
