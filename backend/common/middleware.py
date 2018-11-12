@@ -6,6 +6,7 @@ from django.utils.deprecation import MiddlewareMixin
 
 from common import errors
 from lib.http import render_json
+from lib.mail import async_mail_admins
 from user.models import User
 
 err_log = getLogger('err')
@@ -19,6 +20,7 @@ class LogicErrorMiddleware(MiddlewareMixin):
         else:
             error_info = '\n%s' % format_exc()
             err_log.error(error_info)  # 输出错误日志
+            async_mail_admins('异常告警', error_info, fail_silently=False)
             response = render_json(error=errors.InternalError)
 
         return response

@@ -1,5 +1,13 @@
 #!/bin/bash
 
-# 代码发布脚本
+LOCAL_DIR="./"
+REMOTE_DIR="/opt/swiper"
 
-rsync -cvrP --exclude={.git,.hg,.svn,.venv} $PROJECT $USER@$HOST:$PATH
+USER='root'
+HOST='35.194.171.19'
+
+# 上传代码
+rsync -crvP --exclude={.git,.venv,__pycache__} $LOCAL_DIR $USER@$HOST:$REMOTE_DIR/
+
+# 远程重启
+ssh $USER@$HOST "$REMOTE_DIR/deployment/restart.sh"

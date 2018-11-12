@@ -147,6 +147,15 @@ REDIS = {
 }
 
 
+# Email 配置
+ADMINS = [
+    ('John', 'john@example.com'),
+    ('Mary', 'mary@example.com')
+]
+EMAIL_SUBJECT_PREFIX = '[Swiper] '
+
+
+
 # Logging
 LOGGING = {
     'version': 1,
