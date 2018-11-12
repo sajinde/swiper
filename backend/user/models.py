@@ -74,7 +74,7 @@ class User(models.Model):
 
 
 class Avatar(models.Model):
-    '''用户头像'''
+    '''用户形象'''
     first = models.URLField(null=True, blank=True)
     second = models.URLField(null=True, blank=True)
     third = models.URLField(null=True, blank=True)
@@ -87,6 +87,10 @@ class Avatar(models.Model):
                 self.fourth, self.fifth, self.sixth]
         return filter(None, urls)  # 取出非空头像
 
+    @cached_property
+    def head(self):
+        '''选择第一张图片作为头像'''
+        return self.first
 
 class Profile(models.Model):
     SEX = (

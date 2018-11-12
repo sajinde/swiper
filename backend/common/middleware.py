@@ -32,6 +32,7 @@ class AuthMiddleware(MiddlewareMixin):
     IGNORED_PATH_LIST = [
         '/api/user/verify',
         '/api/user/login',
+        '/weibo/'
     ]
 
     def is_ignored_path(self, path):

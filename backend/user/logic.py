@@ -1,3 +1,6 @@
+import requests
+from django.conf import settings
+
 from lib.cache import rds
 from lib import sms
 from lib.qiniu import qiniu_upload_data
@@ -5,6 +8,7 @@ from common import keys
 from common import errors
 from swiper import platform_config
 from worker import call_by_worker
+
 
 def send_login_code(phone_num):
     '''发送登陆验证短信'''
@@ -28,3 +32,37 @@ def upload_avatar_to_cloud(avatar, files):
         url = '%s/%s' % (platform_config.QN_BASE_URL, filename)
         setattr(avatar, field_name, url)
     avatar.save()
+
+
+def get_wb_access_token(code):
+    '''获取微博的 Access Token'''
+    # 构造参数
+    args = settings.WB_ACCESS_TOKEN_ARGS.copy()
+    args['code'] = code
+
+    response = requests.post(settings.WB_ACCESS_TOKEN_API, data=args)  # 发送请求
+    data = response.json()  # 提取数据
+    if 'access_token' in data:
+        access_token = data['access_token']
+        uid = data['uid']
+        return access_token, uid
+    else:
+        return None, None
+
+
+def wb_user_show(access_token, wb_uid):
+    '''根据微博用户ID获取用户信息'''
+    # 构造参数
+    args = settings.WB_USER_SHOW_ARGS
+    args['access_token'] = access_token
+    args['uid'] = wb_uid
+
+    # 发送请求
+    response = requests.get(settings.WB_USER_SHOW_API, params=args)
+    data = response.json()
+    if 'screen_name' in data:
+        screen_name = data['screen_name']
+        avatar = data['avatar_hd']
+        return screen_name, avatar
+    else:
+        return None, None

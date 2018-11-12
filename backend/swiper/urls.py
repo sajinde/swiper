@@ -27,6 +27,9 @@ urlpatterns = [
     url(r'^api/user/profile/show$', user_api.show_profile),
     url(r'^api/user/profile/update$', user_api.update_profile),
     url(r'^api/user/avatar/upload$', user_api.upload_avatar),
+    # WeiBo
+    url(r'weibo/authurl$', user_api.weibo_authurl),
+    url(r'weibo/callback$', user_api.weibo_callback),
 
     # Social API
     url(r'api/social/recommend$', social_api.recommend),

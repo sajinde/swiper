@@ -1,3 +1,7 @@
+from urllib.parse import urlencode
+
+from django.conf import settings
+
 from lib.cache import rds
 from lib.http import require_post, render_json
 from common import errors
@@ -7,6 +11,8 @@ from user.models import User
 from user.forms import ProfileForm
 from user.logic import send_login_code
 from user.logic import upload_avatar_to_cloud
+from user.logic import get_wb_access_token
+from user.logic import wb_user_show
 
 
 def verify_phone(request):
@@ -33,7 +39,6 @@ def login(request):
     if created:
         user.init()
     request.session['uid'] = user.id
-    request.session['nickname'] = user.nickname
     return render_json({'user': user.to_dict()})
 
 
@@ -61,3 +66,35 @@ def upload_avatar(request):
     avatar = request.user.avatar
     upload_avatar_to_cloud(avatar, request.POST)
     return render_json()
+
+
+def weibo_authurl(request):
+    auth_url = '%s?%s' % (settings.WB_AUTH_API, urlencode(settings.WB_AUTH_ARGS))
+    return render_json({'auth_url': auth_url})
+
+
+def weibo_callback(request):
+    '''微博回调接口'''
+    code = request.GET.get('code')
+
+    # 获取 access_token
+    access_token, wb_uid = get_wb_access_token(code)
+    if access_token is None:
+        raise errors.WeiboAccessTokenError
+
+    # 获取微博的用户数据
+    screen_name, avatar = wb_user_show(access_token, wb_uid)
+    if screen_name is None:
+        raise errors.WeiboUserShowError
+
+    # 利用微博的账号，在论坛内进行登陆、注册
+    nickname = '%s_wb' % screen_name
+    user, is_created = User.get_or_create(nickname=nickname)
+    user.avatar.first = avatar
+    user.avatar.save()
+    user.save()
+
+    # 记录用户状态
+    request.session['uid'] = user.id
+
+    return render_json({'user': user.to_dict()})

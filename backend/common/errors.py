@@ -50,3 +50,7 @@ NameConflict = gen_error('NameConflict', 2001)      # 名字冲突
 MoneyNotEnough = gen_error('MoneyNotEnough', 2002)  # 金钱不足
 UserNotExist = gen_error('UserNotExist', 2003)      # 用户不存在
 NotYourFriend = gen_error('NotYourFriend', 2004)    # 不是好友关系
+
+# 第三方错误
+WeiboAccessTokenError = gen_error('WeiboAccessTokenError', 9000) # AccessToken 接口错误
+WeiboUserShowError = gen_error('WeiboUserShowError', 9000)       # UserShow 接口错误
