@@ -74,7 +74,11 @@ class User(models.Model):
 
 
 class Avatar(models.Model):
-    '''用户形象'''
+    '''
+    用户形象
+
+    与 User 是“一对一”关系，直接与 User 表 id 保持一致
+    '''
     first = models.URLField(null=True, blank=True)
     second = models.URLField(null=True, blank=True)
     third = models.URLField(null=True, blank=True)
@@ -94,6 +98,11 @@ class Avatar(models.Model):
 
 
 class Profile(models.Model):
+    '''
+    用户个人配置
+
+    与 User 是“一对一”关系，直接与 User 表 id 保持一致
+    '''
     SEX = (
         ('Male', '男性'),
         ('Female', '女性'),

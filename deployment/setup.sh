@@ -35,7 +35,7 @@ install_software() {
 }
 
 
-# 安装 Linux
+# 安装 Nginx
 install_nginx() {
     echo '正在安装 Nginx...'
     if ! which nginx > /dev/null

@@ -6,8 +6,8 @@ class Swiped(models.Model):
     '''滑过的记录'''
     MARK = (
         ('like', '喜欢'),
-        ('superlike', '喜欢'),
-        ('dislike', '喜欢'),
+        ('superlike', '超级喜欢'),
+        ('dislike', '不喜欢'),
     )
 
     uid = models.IntegerField(db_index=True, verbose_name='用户自身 id')
@@ -39,7 +39,7 @@ class Swiped(models.Model):
 
     @classmethod
     def swipe_left(cls, uid, sid):
-        '''右滑'''
+        '''左滑'''
         defaults = {'mark': 'dislike'}
         cls.objects.update_or_create(uid=user.id, sid=stranger_id, defaults=defaults)
 
@@ -57,6 +57,12 @@ class Swiped(models.Model):
 
 
 class Friends(models.Model):
+    '''
+    好友关系表
+
+    User 表自身的“多对多”关系, 有两个 uid 字段。
+    为了数据量更精简，用户 A 与 用户 B 是好友关系只会产生一条记录，取其中较小的做 uid1, 较大的做 uid2
+    '''
     uid1 = models.IntegerField()
     uid2 = models.IntegerField()
 

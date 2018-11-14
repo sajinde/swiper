@@ -1,7 +1,6 @@
 from urllib.parse import urlencode
 
-from django.conf import settings
-
+from swiper import platform_config
 from lib.cache import rds
 from lib.http import require_post, render_json
 from common import errors
@@ -69,7 +68,7 @@ def upload_avatar(request):
 
 
 def weibo_authurl(request):
-    auth_url = '%s?%s' % (settings.WB_AUTH_API, urlencode(settings.WB_AUTH_ARGS))
+    auth_url = '%s?%s' % (platform_config.WB_AUTH_API, urlencode(platform_config.WB_AUTH_ARGS))
     return render_json({'auth_url': auth_url})
 
 

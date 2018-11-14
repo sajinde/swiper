@@ -75,7 +75,7 @@ code | description
 
         field | required | type | description
         ------|----------|------|-----------------------
-        phone | Yes      |  str | 手机号, "+8618888888888"
+        phone | Yes      |  str | 手机号, "18888888888"
 
     * **Return**:
 
@@ -96,6 +96,7 @@ code | description
 
         field | required | type | description
         ------|----------|------|-----------------------
+        phone | Yes      |  int | 手机号
          code | Yes      |  int | 验证码
 
     * **Return**:
