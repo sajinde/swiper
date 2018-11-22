@@ -84,20 +84,29 @@
         },
 
         methods: {
+          // 获取验证码
           get_verify_code: function() {
-            axios.post('http://127.0.0.1:9000/user/verify', {phone: this.phone})
-            .catch(function (error) {
-                console.log('Error', error.message);
-            });
+            request.get('/api/user/verify',
+                      {
+                        params: {phone: this.phone}
+                      })
             this.seen=true
             this.btn_text = "登陆"
           },
 
+          // 登陆
           login: function() {
-            resp = axios.post('http://127.0.0.1:9000/user/login',
-                             {phone: this.phone, code: this.code}
-            )},
+            request.post('/api/user/login',
+                       {
+                         phone: this.phone,
+                         code: this.code
+                       })
+                  .then(function(response) {
+                    axios.defaults.headers['Cookies'] = response.headers['Set-Cookies']
+                  })
+            },
 
+          // 按钮事件
           normal_login: function() {
             if (this.seen === false) {
               this.get_verify_code()
@@ -105,6 +114,8 @@
               this.login()
             }
           },
+
+          // TODO: 微博登录
           weibo_login: function() {}
         }
       }

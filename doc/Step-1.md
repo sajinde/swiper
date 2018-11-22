@@ -58,7 +58,7 @@ Swiper Social 是一个类似于 “探探” 的社交类程序, 采用前后�
     ├── app1/
     │   ├── migrations/
     │   ├── apps.py
-    │   ├── helper.py        # 逻辑写到这里
+    │   ├── helper.py (logic.py)  # 逻辑写到这里
     │   ├── models.py
     │   └── views.py (api.py)
     ├── app2/
@@ -72,7 +72,7 @@ Swiper Social 是一个类似于 “探探” 的社交类程序, 采用前后�
     │   ├── http.py
     │   ├── orm.py
     │   └── sms.py
-    ├── worker/              # 异步任务
+    ├── worker/              # 异步任务，或耗时任务，或定时任务
     │   ├── __init__.py
     │   └── config.py
     └── manage.py
@@ -92,7 +92,7 @@ Swiper Social 是一个类似于 “探探” 的社交类程序, 采用前后�
 
 ## 四、Git 及 Github 的使用
 
-![git](./doc/img/git.png)
+![git](./img/git.png)
 
 1. Git 常用命令回顾
 
@@ -130,17 +130,20 @@ Swiper Social 是一个类似于 “探探” 的社交类程序, 采用前后�
     - 市场部门
     - 运营部门
     - 研发部门
-        - 技术总监
+        - 项目经理
         - 产品研发
             - 产品人员
             - 设计人员
         - 技术研发
+            - 技术总监
             - 前端开发: HTML5 / iOS / Android
             - 后端开发
                 - Python / PHP / Java / Go
                 - 运维
                 - DBA
             - 测试
+                - 白盒测试
+                - 黑盒测试
 
 3. 开发流程介绍
 

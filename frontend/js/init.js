@@ -1,13 +1,16 @@
-axios.interceptors.request.use(
-    function(config) {
-        config.headers["Content-Type"] = "application/x-www-form-urlencoded";
-        if (config.method === "post") {
-            config.data = Qs.stringify({ ...config.data });
-        }
-        return config;
+axios.defaults.withCredentials = true;
+
+const request = axios.create({
+    baseURL: 'http://127.0.0.1:9000/',
+    headers:{
+        "Access-Control-Allow-Headers":"Origin, X-Requested-With, Content-Type, Accept",
+        'Content-Type':'application/x-www-form-urlencoded',
+        "Access-Control-Allow-Credentials": true,
+        "Access-Control-Allow-Origin": "http://127.0.0.1:8000",
+        "Access-Control-Allow-Methods": "POST,GET,PUT,DELETE,OPTIONS",
     },
-    function(error) {
-        loadinginstace.close();
-        return Promise.reject(error);
-    }
-)
+    transformRequest: [function (data) {
+        data = Qs.stringify(data);
+        return data;
+    }]
+});
