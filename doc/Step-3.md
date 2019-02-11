@@ -19,7 +19,7 @@
         - URL 中使用动词
         - URL 中出现版本号
         - 参数用 querystring 表示, 而不要拼在 path 部分
-            - 错误示范: GET /user/book/3
+            - 错误示范: GET /user/book/id/3
             - 正确示范: GET /user/book?id=3
         - 状态码的使用要精确
             - 2xx：操作成功
@@ -336,6 +336,8 @@
     但需要注意, 分布式部署的多台 Nginx 服务器上, 静态资源需要互相同步
 
 2. CDN
+
+    ![cdn](./img/CDN.png)
 
     CDN 的全称是 Content Delivery Network, 即内容分发网络.
 
